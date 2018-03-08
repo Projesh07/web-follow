@@ -1,0 +1,40 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+    Global Stream
+{% endblock %}
+
+{% block page-title %}
+    Global Stream
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'postItem' %}" method = "post">
+        <label class = "post">New Post: </label>
+        <input type="text" name = "postItem" class = "post" placeholder="New Post..." autofocus>
+        <input type="submit" class = "button"value="Post">
+        {% csrf_token %}
+    </form>
+{% endblock %}
+
+<br/>
+{% block post %}
+    {% for p in posts %}
+        <i> Post by <a href  = "{% url 'getProfile' p.post_user.id %}">{{p.first_name}} {{p.last_name}}</a></i> -- {{p.post_content}} -- <i>{{p.post_time}}</i>
+        <br/>
+            {% if p.comments.all %}
+                    {% for comment in p.comments.all %}
+                        <br/>
+                        <span class = "commentArea">
+                            <i> Comment by <a href  = "{% url 'getProfile' comment.comment_user.id %}">{{comment.first_name}} {{comment.last_name}}</a></i> -- {{comment.comment_content}} -- <i>{{comment.comment_time}}</i>
+                        </span>
+                    {% endfor %}
+            {% endif %}
+        <form action = "{% url 'commentItem' p.id %}" class = "commentArea" method = "post">
+            <label class = "comment">Comment: </label>
+            <input type="text"  name = "commentItem" class = "post" placeholder="New Comment..." autofocus>
+            <input type="submit" class = "button" value="Comment">
+            {% csrf_token %}
+        </form>
+    {% endfor %}
+{% endblock %}

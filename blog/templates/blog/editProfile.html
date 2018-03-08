@@ -1,0 +1,39 @@
+{% extends "blog/base.html" %}
+
+{% block page-title %}
+     My Profile
+{% endblock %}
+
+{% block content %}
+<div class="error">
+    {{message}}
+</div>
+
+<form enctype="multipart/form-data" method="get" action="{% url 'profile' %}">
+    <table border = "0" width = "100%">
+        {% for i in item %}
+        <tr>
+            <td width = "30%">
+                    Profile Image:
+            </td>
+            <td>
+                {% if i.picture %}
+                    <img src="{% url 'photo' i.id %}" width="200px">
+                    <br>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                    Bio
+            </td>
+            <td>
+                {{i.bio}}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% csrf_token %}
+    <input type="submit" class = "submit" value="Update">
+</form>
+{% endblock %}

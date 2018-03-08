@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8"> {% load staticfiles %}
+    <link href="{% static 'blog/base.css' %}" rel="stylesheet" type="text/css">
+    <title> {% block title %}{% endblock %} </title>
+</head>
+
+<body>
+    <div class="big-heading">
+        Blog Master <i>{{user.first_name}} {{user.last_name}}</i>
+    </div>
+    <br/>
+
+    <div class="navigation" style="width:100%">
+        <form action="{% url 'logout' %}" method="get" id="form_logout"></form>
+        <form action="{% url 'followerStream' %}" method="get" id="form_follower"></form>
+        <form action="{% url 'globalStream' %}" method="get" id="form_global"></form>
+        <form action="{% url 'profile' %}" method="get" id="form_profile"></form>
+        <button style="width:25%" form="form_global">Global Stream</button>
+        <button style="width:25%" form="form_follower">Follower Stream</button>
+        <button style="width:25%" form="form_profile">My Profile</button>
+        <button style="width:25%" form="form_logout">Log Out</button>
+
+    </div>
+
+    <div class="user-info">
+        {% block user-info %} {% endblock %}
+    </div>
+
+    <div class="page-title">
+        {% block page-title %} {% endblock %}
+    </div>
+
+    {% if message %}
+    <div class="message">
+        {{message}}
+    </div>
+    {% endif %}
+
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+
+    <div class="postArea">
+        {% block post %} {% endblock %}
+    </div>
+</body>
+
+</html>

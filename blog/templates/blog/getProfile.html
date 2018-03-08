@@ -1,0 +1,46 @@
+{% extends "blog/base.html" %}
+
+{% block page-title %}
+    Profile
+{% endblock %}
+
+{% block content %}
+<div class="error">
+    {{message}}
+</div>
+    <table border = "0" width = "100%">
+        {% for i in item %}
+        <tr>
+            <td>
+                    Name
+            </td>
+            <td>
+                {{i.toUser.first_name}} {{i.toUser.last_name}}
+            </td>
+        </tr>
+        <tr>
+            <td width = "30%">
+                    Profile Image:
+            </td>
+            <td>
+                {% if i.picture %}
+                    <img src="{% url 'photo' i.id %}" width="200px">
+                    <br>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                    Bio
+            </td>
+            <td>
+                {{i.bio}}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <form action="{% url 'register' %}" method="get">
+        <input type="submit" class = "submit" value="Follow">
+    </form>
+{% endblock %}

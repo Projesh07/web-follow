@@ -1,0 +1,41 @@
+{% extends "blog/base.html" %}
+
+{% block page-title %}
+    Create My Profile
+{% endblock %}
+
+{% block content %}
+<div class="error">
+    {{message}}
+</div>
+
+
+<form enctype="multipart/form-data" action="{% url 'profile' %}" method="post" >
+<table>
+    {% for field in form.visible_fields %}
+        <tr>
+            <td>{{field.label_tag}}</td>
+            <td>{{field}}</td>
+            <td class="error">
+                {% for error in field.errors %} {{error}} {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}
+    <tr><td colspan="3"><input type="submit" value="Update" class = "submit"></td></tr>
+</table>
+    {% csrf_token %}
+</form>
+
+
+<!-- {% for item in items %}
+    <div>
+        {% if item.picture %}
+            <img src="{% url 'photo' item.id %}" alt="{{item.text}}" width="200px">
+            <br>
+        {% endif %}
+        {{item.bio}}
+    </div>
+    <hr>
+{% endfor %} -->
+
+{% endblock %}
